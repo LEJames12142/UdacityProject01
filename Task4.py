@@ -24,27 +24,30 @@ Print a message:
 <list of numbers>
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
-def GetLists(lists):
-    outgoing = []
-    incoming = []
-    for item in lists:
+def GetLists(calls,texts):
+    outgoing = set()
+    nonTele = set()
+    for item in calls:
         if item[0] not in outgoing:
-            outgoing.append(item[0])
-        if item[1] not in incoming:
-            incoming.append(item[1])
-    return outgoing,incoming
+            outgoing.add(item[0])
+        if item[1] not in nonTele:
+            nonTele.add(item[1])
+    for item in texts:
+        if item[0] not in nonTele:
+            outgoing.add(item[0])
+        if item[1] not in nonTele:
+            nonTele.add(item[1]) 
+    return outgoing,nonTele
     
-def IdentifyTeleMarketNos(outgoingCalls,AllNos):
-    Lists = []
+def IdentifyTeleMarketNos(outgoingCalls,nonTele):
+    Lists = set()
     for item in outgoingCalls:
         #print(item[2][3:10])
-        if item not in AllNos:
-            Lists.append(item)
+        if item not in nonTele:
+            Lists.add(item)
     return Lists
-outgoingCalls,incomingCalls = GetLists(calls)
-outgoingTexts,incomingTexts = GetLists(texts)
-AllOtherNos = incomingCalls + outgoingTexts + incomingTexts
-teleMArketingNumbers = IdentifyTeleMarketNos(outgoingCalls,AllOtherNos)
+outgoingCalls,nonTele = GetLists(calls,texts)
+teleMArketingNumbers = IdentifyTeleMarketNos(outgoingCalls,nonTele)
 print("These numbers could be telemarketers: ")
 for i in sorted(teleMArketingNumbers):
     print(i)

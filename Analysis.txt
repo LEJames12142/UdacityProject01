@@ -1,0 +1,5 @@
+1. Task0:O(1)
+2. Task1:O(n)
+3. Task2:O(n)
+4. Task3:O(n^2 + nlogn)
+5. Task4:O(n^2 + nlogn)
